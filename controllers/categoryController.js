@@ -50,3 +50,29 @@ exports.category_create_post = [
     }
   },
 ];
+
+//Category Detail
+exports.category_detail = async (req, res) => {
+  const categoryId = req.params.id;
+
+  try {
+    const categoryQuery = await pool.query("SELECT * FROM categories WHERE id = $1", [categoryId]);
+    const itemsQuery = await pool.query("SELECT * FROM items WHERE category_id = $1", [categoryId]);
+
+    const category = categoryQuery.rows[0];
+    const items = itemsQuery.rows;
+
+    if (!category) {
+      return res.status(404).send("Category not found");
+    }
+
+    res.render("categories/detail", {
+      title: category.name,
+      category,
+      items,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+};
