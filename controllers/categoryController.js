@@ -99,3 +99,59 @@ exports.category_edit_get = async (req, res) => {
   }
 };
 
+//Category update post
+exports.category_update_post = [
+ // 🧼 Validate and sanitize input
+  body("name").trim().notEmpty().withMessage("Name is required").escape(),
+  body("description").trim().escape(),
+
+  async (req, res) => {
+    const categoryId = req.params.id;
+    const errors = validationResult(req);
+    const { name, description } = req.body;
+
+    const newImageUrl = req.file ? req.file.path : null;
+
+    try {
+      // 🔍 Get existing category
+      const existingResult = await pool.query("SELECT * FROM categories WHERE id = $1", [categoryId]);
+      const existingCategory = existingResult.rows[0];
+
+      if (!existingCategory) {
+        return res.status(404).send("Category not found");
+      }
+
+      // 🧾 If validation errors
+      if (!errors.isEmpty()) {
+        return res.render("categories/form", {
+          title: "Edit Category",
+          category: { id: categoryId, name, description, image_url: existingCategory.image_url },
+          errors: errors.array(),
+        });
+      }
+
+      // 🔁 Use existing image if new one not uploaded
+      const image_url = newImageUrl || existingCategory.image_url;
+
+      // 💾 Update database
+      await pool.query(
+        `UPDATE categories
+         SET name = $1, description = $2, image_url = $3
+         WHERE id = $4`,
+        [name, description, image_url, categoryId]
+      );
+
+      res.redirect(`/categories/${categoryId}`);
+    } catch (err) {
+      console.error("Error updating category:", err);
+      res.status(500).send("Server error");
+    }
+  }
+];
+
+
+
+
+
+
+

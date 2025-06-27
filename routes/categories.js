@@ -9,6 +9,8 @@ router.post("/new", upload.single("image"), categoryController.category_create_p
 router.get("/:id", categoryController.category_detail);
 // Show edit form
 router.get("/:id/edit", categoryController.category_edit_get);
+//update category
+router.post("/:id/update", upload.single("image"), categoryController.category_update_post);
 
 
 module.exports = router;
