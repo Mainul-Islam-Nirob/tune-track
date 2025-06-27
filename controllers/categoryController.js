@@ -76,3 +76,26 @@ exports.category_detail = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+//Category Edit Form
+exports.category_edit_get = async (req, res) => {
+  const categoryId = req.params.id;
+
+  try {
+    const result = await pool.query("SELECT * FROM categories WHERE id = $1", [categoryId]);
+    const category = result.rows[0];
+
+    if (!category) {
+      return res.status(404).send("Category not found");
+    }
+
+    res.render("categories/edit", {
+      title: `Edit Category - ${category.name}`,
+      category,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+};
+
