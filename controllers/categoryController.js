@@ -28,8 +28,7 @@ exports.category_create_post = [
     const errors = validationResult(req);
     const { name, description } = req.body;
 
-    // image path
-    const image_url = req.file ? `/uploads/${req.file.filename}` : null;
+    const image_url = req.file ? req.file.path : null; // Cloudinary gives the full URL
 
     if (!errors.isEmpty()) {
       return res.render("categories/form", {
