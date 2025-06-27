@@ -1,0 +1,21 @@
+{
+  "name": "tune-track",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Mainul Islam",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "pg": "^8.16.2"
+  }
+}
