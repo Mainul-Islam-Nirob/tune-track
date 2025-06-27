@@ -149,6 +149,45 @@ exports.category_update_post = [
   }
 ];
 
+//confirmation for deleting category
+exports.category_delete_get = async (req, res) => {
+  const categoryId = req.params.id;
+
+  try {
+    const categoryResult = await pool.query("SELECT * FROM categories WHERE id = $1", [categoryId]);
+    const itemResult = await pool.query("SELECT * FROM items WHERE category_id = $1", [categoryId]);
+
+    const category = categoryResult.rows[0];
+    const items = itemResult.rows;
+
+    if (!category) {
+      return res.status(404).send("Category not found");
+    }
+
+    res.render("categories/delete", {
+      title: "Delete Category",
+      category,
+      items,
+    });
+  } catch (err) {
+    console.error("❌ Error loading delete page:", err);
+    res.status(500).send("Server error");
+  }
+};
+
+//delete category
+exports.category_delete_post = async (req, res) => {
+  const categoryId = req.params.id;
+
+  try {
+    // Because of ON DELETE CASCADE, items will be deleted automatically
+    await pool.query("DELETE FROM categories WHERE id = $1", [categoryId]);
+    res.redirect("/categories");
+  } catch (err) {
+    console.error("❌ Error deleting category:", err);
+    res.status(500).send("Error deleting category");
+  }
+};
 
 
 

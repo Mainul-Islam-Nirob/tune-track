@@ -23,9 +23,10 @@
             <div class="flex justify-between items-center text-sm">
               <a href="/categories/<%= category.id %>" class="text-indigo-600 hover:underline">View</a>
               <a href="/categories/<%= category.id %>/edit" class="text-yellow-600 hover:underline">Edit</a>
-              <form action="/categories/<%= category.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this category?');">
-                <button type="submit" class="text-red-600 hover:underline">Delete</button>
-              </form>
+              <a href="/categories/<%= category.id %>/delete" class="text-red-600 hover:underline">
+  Delete
+</a>
+
             </div>
           </div>
         </div>
