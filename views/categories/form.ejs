@@ -1,0 +1,21 @@
+<form action="/categories/new" method="POST" enctype="multipart/form-data" class="space-y-4">
+  <div>
+    <label for="name" class="block font-semibold">Name</label>
+    <input type="text" id="name" name="name" value="<%= category.name || '' %>" class="w-full p-2 border rounded" required>
+  </div>
+
+  <div>
+    <label for="description" class="block font-semibold">Description</label>
+    <textarea id="description" name="description" class="w-full p-2 border rounded"><%= category.description || '' %></textarea>
+  </div>
+
+  <div>
+    <label for="image" class="block font-semibold">Upload Image</label>
+    <input type="file" id="image" name="image" accept="image/*" class="w-full p-2 border rounded">
+  </div>
+
+  <div class="flex justify-between items-center">
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Save Category</button>
+    <a href="/categories" class="text-gray-600 hover:underline">Cancel</a>
+  </div>
+</form>
