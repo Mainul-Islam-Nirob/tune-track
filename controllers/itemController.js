@@ -76,3 +76,32 @@ exports.item_create_post = [
     }
   },
 ];
+
+//item details
+exports.item_detail = async (req, res) => {
+  const itemId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      `SELECT items.*, categories.name AS category_name
+       FROM items
+       LEFT JOIN categories ON items.category_id = categories.id
+       WHERE items.id = $1`,
+      [itemId]
+    );
+
+    const item = result.rows[0];
+
+    if (!item) {
+      return res.status(404).send("Item not found");
+    }
+
+    res.render("items/detail", {
+      title: item.name,
+      item,
+    });
+  } catch (err) {
+    console.error("Error fetching item:", err);
+    res.status(500).send("Server error");
+  }
+};

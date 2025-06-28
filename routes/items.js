@@ -8,5 +8,8 @@ router.get("/", itemController.item_list);
 // Create new item
 router.get("/new", itemController.item_create_get);
 router.post("/new", upload.single("image"), itemController.item_create_post);
+//view single item
+router.get("/:id", itemController.item_detail);
+
 
 module.exports = router;
