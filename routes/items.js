@@ -14,5 +14,7 @@ router.get("/:id", itemController.item_detail);
 router.get("/:id/edit", itemController.item_edit_get);
 // Update form handler
 router.post("/:id", upload.single("image"), itemController.item_edit_post);
+//delete item
+router.post("/:id/delete", itemController.item_delete_post);
 
 module.exports = router;

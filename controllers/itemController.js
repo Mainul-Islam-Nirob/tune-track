@@ -187,3 +187,15 @@ exports.item_edit_post = [
   }
 ];
 
+//delete item
+exports.item_delete_post = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await pool.query("DELETE FROM items WHERE id = $1", [id]);
+    res.redirect("/items");
+  } catch (err) {
+    console.error("Error deleting item:", err);
+    res.status(500).send("Server error");
+  }
+};
