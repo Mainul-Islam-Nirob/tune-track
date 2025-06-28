@@ -3,6 +3,8 @@ const path = require("path");
 const dotenv = require("dotenv");
 const indexRoutes = require("./routes/index");
 const categoryRoutes = require("./routes/categories");
+const itemRoutes = require("./routes/items");
+
 // const itemRoutes = require("./routes/items");
 
 
@@ -18,7 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/", indexRoutes);
 app.use("/categories", categoryRoutes);
-// app.use("/items", itemRoutes);
+app.use("/items", itemRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
