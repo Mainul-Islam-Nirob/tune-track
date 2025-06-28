@@ -105,3 +105,85 @@ exports.item_detail = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+//item edit form
+exports.item_edit_get = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const itemResult = await pool.query("SELECT * FROM items WHERE id = $1", [id]);
+    const categoriesResult = await pool.query("SELECT * FROM categories");
+
+    const item = itemResult.rows[0];
+    if (!item) return res.status(404).send("Item not found");
+
+    res.render("items/edit", {
+      title: "Edit Instrument",
+      item,
+      categories: categoriesResult.rows,
+      errors: [],
+      isEditing: true
+    });
+  } catch (err) {
+    console.error("Error fetching item:", err);
+    res.status(500).send("Server error");
+  }
+};
+
+//item update
+exports.item_edit_post = [
+  // Validate & sanitize fields
+  body("name").trim().notEmpty().withMessage("Name is required").escape(),
+  body("brand").trim().escape(),
+  body("price").isFloat({ min: 0 }).withMessage("Price must be a number"),
+  body("quantity").isInt({ min: 0 }).withMessage("Quantity must be an integer"),
+  body("category_id").notEmpty().withMessage("Category is required"),
+
+  async (req, res) => {
+    const errors = validationResult(req);
+    const id = req.params.id;
+    const { name, brand, price, quantity, description, category_id } = req.body;
+    const image_url = req.file ? req.file.path : null;
+
+    const itemData = {
+      id,
+      name,
+      brand,
+      price,
+      quantity,
+      description,
+      category_id,
+    };
+
+    try {
+      if (!errors.isEmpty()) {
+        const categoriesResult = await pool.query("SELECT * FROM categories");
+        return res.render("items/edit", {
+          title: "Edit Instrument",
+          item: itemData,
+          categories: categoriesResult.rows,
+          errors: errors.array(),
+          isEditing: true
+        });
+      }
+
+      if (image_url) {
+        await pool.query(
+          `UPDATE items SET name=$1, brand=$2, price=$3, quantity=$4, description=$5, category_id=$6, image_url=$7 WHERE id=$8`,
+          [name, brand, price, quantity, description, category_id, image_url, id]
+        );
+      } else {
+        await pool.query(
+          `UPDATE items SET name=$1, brand=$2, price=$3, quantity=$4, description=$5, category_id=$6 WHERE id=$7`,
+          [name, brand, price, quantity, description, category_id, id]
+        );
+      }
+
+      res.redirect("/items/" + id);
+    } catch (err) {
+      console.error("Error updating item:", err);
+      res.status(500).send("Server error");
+    }
+  }
+];
+
