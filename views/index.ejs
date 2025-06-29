@@ -1,17 +1,50 @@
 <%- include("partials/header") %>
+<!-- Optional animation styles -->
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+</style>
 
 <!-- Hero Section -->
-<section class="bg-indigo-600 text-white rounded-xl p-10 mb-12 shadow-md">
-  <div class="max-w-3xl mx-auto text-center">
-    <h1 class="text-4xl sm:text-5xl font-bold mb-4">Welcome to TuneTrack 🎶</h1>
-    <p class="text-lg sm:text-xl mb-6">
-      Your one-stop solution for managing all kinds of musical instruments — from guitars to tabla.
+<section class="relative bg-indigo-700 text-white overflow-hidden rounded-2xl shadow-lg mb-12">
+  <!-- Decorative background music icon pattern -->
+  <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/black-thread.png')]"></div>
+
+  <!-- Main content -->
+  <div class="relative max-w-4xl mx-auto px-6 py-20 text-center z-10">
+    <h1 class="text-4xl sm:text-5xl font-extrabold mb-4 tracking-tight animate-fade-in-up">
+      🎼 Welcome to <span class="text-yellow-300">TuneTrack</span>
+    </h1>
+    <p class="text-lg sm:text-xl mb-6 animate-fade-in-up delay-100">
+      Manage your musical instrument inventory with ease from 🎸 guitars to 🪘 tabla.
     </p>
-    <a href="/categories" class="bg-white text-indigo-700 font-semibold py-2 px-4 rounded hover:bg-gray-100 transition">
-      Browse Categories
-    </a>
+    <div class="flex justify-center gap-4 animate-fade-in-up delay-200">
+      <a href="/categories" class="bg-yellow-300 text-indigo-900 font-semibold py-3 px-6 rounded-xl shadow hover:bg-yellow-400 transition">
+        🎹 Explore Categories
+      </a>
+      <a href="/items" class="border border-white py-3 px-6 rounded-xl hover:bg-white hover:text-indigo-700 transition">
+        🎺 View Instruments
+      </a>
+    </div>
   </div>
 </section>
+
 
 <!-- Category Grid -->
 <section class="max-w-7xl mx-auto px-4">
