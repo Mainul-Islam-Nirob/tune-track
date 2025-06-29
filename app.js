@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const indexRoutes = require("./routes/index");
 const categoryRoutes = require("./routes/categories");
 const itemRoutes = require("./routes/items");
+const dashboardRoutes = require("./routes/dashboard");
 
 // const itemRoutes = require("./routes/items");
 
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 app.use("/", indexRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/items", itemRoutes);
+app.use("/", dashboardRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
