@@ -23,13 +23,21 @@
             <div class="flex justify-between items-center text-sm">
               <a href="/categories/<%= category.id %>" class="text-indigo-600 hover:underline">View</a>
               <a href="/categories/<%= category.id %>/edit" class="text-yellow-600 hover:underline">Edit</a>
-              <a href="/categories/<%= category.id %>/delete" class="text-red-600 hover:underline">
-  Delete
-</a>
+              <button
+                type="button"
+                onclick="showPasswordModal('<%= category.id %>')"
+                class="text-red-600 hover:underline"
+              >
+                Delete
+              </button>
 
             </div>
           </div>
         </div>
+        <!-- 🔒 Hidden Delete Form -->
+        <form id="delete-form-<%= category.id %>" action="/categories/<%= category.id %>/delete" method="POST" class="hidden">
+          <input type="hidden" name="adminPassword" id="adminPassword-<%= category.id %>">
+        </form>
       <% }) %>
     </div>
   <% } %>

@@ -178,6 +178,11 @@ exports.category_delete_get = async (req, res) => {
 //delete category
 exports.category_delete_post = async (req, res) => {
   const categoryId = req.params.id;
+  const { adminPassword } = req.body;
+
+  if (adminPassword !== process.env.ADMIN_SECRET) {
+    return res.status(403).send("Forbidden: Invalid password.");
+  }
 
   try {
     // Because of ON DELETE CASCADE, items will be deleted automatically

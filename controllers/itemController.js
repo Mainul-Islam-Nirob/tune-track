@@ -190,6 +190,11 @@ exports.item_edit_post = [
 //delete item
 exports.item_delete_post = async (req, res) => {
   const id = req.params.id;
+  const { adminPassword } = req.body;
+
+  if (adminPassword !== process.env.ADMIN_SECRET) {
+    return res.status(403).send("Forbidden: Invalid password.");
+  }
 
   try {
     await pool.query("DELETE FROM items WHERE id = $1", [id]);
