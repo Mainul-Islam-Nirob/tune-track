@@ -41,12 +41,13 @@
 * 👥 User auth & roles
 
 ## 📸 Screenshots
-    ![Home Page](./homepage.png)
-    ![Category Page](./category%20page.png)
-    ![Category Details](./category%20detail.png)
-    ![Instrument Page](./instrument%20page.png)
-    ![Dashboard](./dashboard.png)
-    
+![Home Page](./homepage.png)
+![Category Page](./category%20page.png)
+![Category Details](./category%20detail.png)
+![Instrument Page](./instrument%20page.png)
+![Dashboard](./dashboard.png)
+
+
 
 ## 🧑‍💻 Author
 
