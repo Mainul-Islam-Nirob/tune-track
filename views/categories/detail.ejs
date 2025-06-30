@@ -1,8 +1,8 @@
 <%- include('../partials/header') %>
-
 <main class="max-w-5xl mx-auto mt-10 p-6 sm:p-8">
-  <section class="bg-white rounded-xl shadow-lg p-6 sm:p-10">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+  <section class="bg-white rounded-2xl shadow-xl p-6 sm:p-10">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
       <div>
         <h1 class="text-3xl font-bold text-indigo-700"><%= category.name %></h1>
         <% if (category.description) { %>
@@ -10,29 +10,47 @@
         <% } %>
       </div>
       <% if (category.image_url) { %>
-        <img src="<%= category.image_url %>" alt="<%= category.name %>" class="w-full sm:w-64 rounded-xl shadow mt-4 sm:mt-0" />
+        <img src="<%= category.image_url %>" alt="<%= category.name %>" class="w-full sm:w-64 rounded-xl shadow-md" />
       <% } %>
     </div>
 
-    <hr class="my-6 border-gray-200" />
+    <!-- Action Buttons -->
+    <div class="flex gap-4 mb-8">
+      <a href="/categories/<%= category.id %>/edit" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl font-semibold transition">
+        ✏️ Edit Category
+      </a>
+        <button type="button" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl font-semibold transition" onclick="showPasswordModal('<%= category.id %>')">
+          🗑️ Delete Category
+        </button>
+    </div>
 
-    <h2 class="text-2xl font-semibold mb-4">🎵 Instruments in this Category</h2>
+    <hr class="my-6 border-gray-300" />
+
+    <!-- Instruments List -->
+    <h2 class="text-2xl font-bold text-indigo-700 mb-4">🎶 Instruments in This Category</h2>
 
     <% if (items.length === 0) { %>
       <p class="text-gray-500 italic">No instruments found in this category yet.</p>
     <% } else { %>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <% items.forEach(item => { %>
-          <a href="/items/<%= item.id %>" class="block bg-gray-50 border rounded-xl p-4 hover:shadow transition">
-            <h3 class="text-lg font-semibold text-indigo-600"><%= item.name %></h3>
-            <% if (item.description) { %>
-              <p class="text-sm text-gray-600 mt-1"><%= item.description.slice(0, 80) %>...</p>
-            <% } %>
+          <a href="/items/<%= item.id %>" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden">
+            <img src="<%= item.image_url %>" alt="<%= item.name %>" class="h-40 w-full object-cover" />
+            <div class="p-4">
+              <h3 class="text-lg font-bold text-indigo-700 mb-1"><%= item.name %></h3>
+              <p class="text-sm text-gray-500">Tap to view details</p>
+            </div>
           </a>
+          <!-- 🔒 Hidden Delete Form -->
+        <form id="delete-form-<%= category.id %>" action="/categories/<%= category.id %>/delete" method="POST" class="hidden">
+          <input type="hidden" name="adminPassword" id="adminPassword-<%= category.id %>">
+        </form>
         <% }) %>
       </div>
     <% } %>
   </section>
 </main>
+
+
 
 <%- include('../partials/footer') %>
