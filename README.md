@@ -4,7 +4,7 @@
 
 ---
 
-## 🌐 [Click for Live Demo](https://tune-track-production.up.railway.app/) 
+## 🌐 [Click for Live Demo](https://tune-track-production.up.railway.app/)
 
 ---
 
@@ -41,6 +41,12 @@
 * 👥 User auth & roles
 
 ## 📸 Screenshots
+    ![Home Page](./homepage.png)
+    ![Category Page](./category%20page.png)
+    ![Category Details](./category%20detail.png)
+    ![Instrument Page](./instrument%20page.png)
+    ![Dashboard](./dashboard.png)
+    
 
 ## 🧑‍💻 Author
 
