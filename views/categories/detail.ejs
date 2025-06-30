@@ -22,8 +22,18 @@
         <button type="button" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl font-semibold transition" onclick="showPasswordModal('<%= category.id %>')">
           🗑️ Delete Category
         </button>
+         <a
+        href="/items/new?category_id=<%= category.id %>"
+        class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-xl transition"
+      >
+        ➕ Add New Instrument in "<%= category.name %>"
+      </a>
     </div>
 
+       <!-- 🔒 Hidden Delete Form -->
+        <form id="delete-form-<%= category.id %>" action="/categories/<%= category.id %>/delete" method="POST" class="hidden">
+          <input type="hidden" name="adminPassword" id="adminPassword-<%= category.id %>">
+        </form>
     <hr class="my-6 border-gray-300" />
 
     <!-- Instruments List -->
@@ -41,10 +51,6 @@
               <p class="text-sm text-gray-500">Tap to view details</p>
             </div>
           </a>
-          <!-- 🔒 Hidden Delete Form -->
-        <form id="delete-form-<%= category.id %>" action="/categories/<%= category.id %>/delete" method="POST" class="hidden">
-          <input type="hidden" name="adminPassword" id="adminPassword-<%= category.id %>">
-        </form>
         <% }) %>
       </div>
     <% } %>

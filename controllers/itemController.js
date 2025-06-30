@@ -25,9 +25,10 @@ exports.item_list = async (req, res) => {
 exports.item_create_get = async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM categories ORDER BY name");
+    const selectedCategoryId = req.query.category_id || null;
     res.render("items/form", {
       title: "Add New Instrument",
-      item: {},
+      item: {category_id: selectedCategoryId },
       categories: result.rows,
       errors: [],
     });
@@ -36,6 +37,8 @@ exports.item_create_get = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+
 
 // POST: Handle instrument creation
 exports.item_create_post = [
